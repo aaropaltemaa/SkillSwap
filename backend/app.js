@@ -5,6 +5,7 @@ const logger = require("./utils/logger");
 const usersRouter = require("./controllers/users");
 const loginRouter = require("./controllers/login");
 const registerRouter = require("./controllers/register");
+const exchangeRequestsRouter = require("./controllers/exchangeRequests");
 const middleware = require("./utils/middleware");
 const cors = require("cors");
 
@@ -31,6 +32,7 @@ app.use(middleware.tokenExtractor);
 app.use("/api/users", usersRouter);
 app.use("/api/login", loginRouter);
 app.use("/api/register", registerRouter);
+app.use("/api/exchange-requests", exchangeRequestsRouter);
 
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
