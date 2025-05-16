@@ -36,4 +36,11 @@ exchangeRequestsRouter.post(
   }
 );
 
+exchangeRequestsRouter.get("/", async (req, res) => {
+  const exchangeRequests = await ExchangeRequest.find({})
+    .populate("fromUser", "username name")
+    .populate("toUser", "username name");
+  res.json(exchangeRequests);
+});
+
 module.exports = exchangeRequestsRouter;
