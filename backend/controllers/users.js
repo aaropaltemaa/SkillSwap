@@ -70,4 +70,16 @@ usersRouter.get("/me", middleware.userExtractor, async (req, res) => {
   });
 });
 
+usersRouter.put("/me", middleware.userExtractor, async (req, res) => {
+  const userId = req.user._id;
+  const updates = req.body;
+
+  const updatedUser = await User.findByIdAndUpdate(userId, updates, {
+    new: true,
+    runValidators: true,
+  });
+
+  res.json(updatedUser);
+});
+
 module.exports = usersRouter;
