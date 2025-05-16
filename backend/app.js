@@ -25,13 +25,13 @@ app.use(express.static("dist"));
 app.use(express.json());
 app.use(cors());
 
+app.use(middleware.requestLogger);
+app.use(middleware.tokenExtractor);
+
 app.use("/api/users", usersRouter);
 app.use("/api/login", loginRouter);
 app.use("/api/register", registerRouter);
 
-app.use(middleware.requestLogger);
-app.use(middleware.tokenExtractor);
-app.use(middleware.userExtractor);
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
 

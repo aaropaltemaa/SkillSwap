@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const usersRouter = require("express").Router();
 const User = require("../models/user");
+const middleware = require("../utils/middleware");
 
 usersRouter.post("/", async (req, res, next) => {
   try {
@@ -53,6 +54,20 @@ usersRouter.post("/", async (req, res, next) => {
 usersRouter.get("/", async (req, res) => {
   const users = await User.find({});
   res.json(users);
+});
+
+usersRouter.get("/me", middleware.userExtractor, async (req, res) => {
+  const user = req.user;
+  res.json({
+    id: user._id,
+    username: user.username,
+    name: user.name,
+    email: user.email,
+    skillsOffered: user.skillsOffered,
+    skillsWanted: user.skillsWanted,
+    bio: user.bio,
+    location: user.location,
+  });
 });
 
 module.exports = usersRouter;
