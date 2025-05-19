@@ -56,8 +56,4 @@ exchangeRequestsRouter.get(
   }
 );
 
-/* exchangeRequestsRouter.put("/:id", middleware.userExtractor, async (req, res) => {
-
-}); */
-
 module.exports = exchangeRequestsRouter;
