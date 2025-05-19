@@ -36,11 +36,28 @@ exchangeRequestsRouter.post(
   }
 );
 
-exchangeRequestsRouter.get("/", async (req, res) => {
-  const exchangeRequests = await ExchangeRequest.find({})
-    .populate("fromUser", "username name")
-    .populate("toUser", "username name");
-  res.json(exchangeRequests);
-});
+exchangeRequestsRouter.get(
+  "/",
+  middleware.userExtractor,
+  async (req, res, next) => {
+    try {
+      const userId = req.user._id;
+
+      const exchangeRequests = await ExchangeRequest.find({
+        $or: [{ fromUser: userId }, { toUser: userId }],
+      })
+        .populate("fromUser", "username name")
+        .populate("toUser", "username name");
+
+      res.json(exchangeRequests);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+/* exchangeRequestsRouter.put("/:id", middleware.userExtractor, async (req, res) => {
+
+}); */
 
 module.exports = exchangeRequestsRouter;
