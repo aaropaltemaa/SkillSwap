@@ -22,4 +22,17 @@ messagesRouter.post("/", middleware.userExtractor, async (req, res) => {
   res.status(201).json(savedMessage);
 });
 
+messagesRouter.get("/:userId", middleware.userExtractor, async (req, res) => {
+  const loggedInUser = req.user._id;
+  const otherUser = req.params.userId;
+
+  const messages = await Message.find({
+    $or: [
+      { sender: loggedInUser, receiver: otherUser },
+      { sender: otherUser, receiver: loggedInUser },
+    ],
+  });
+  res.json(messages);
+});
+
 module.exports = messagesRouter;
