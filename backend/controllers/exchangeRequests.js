@@ -56,4 +56,62 @@ exchangeRequestsRouter.get(
   }
 );
 
+exchangeRequestsRouter.put(
+  "/:id/status",
+  middleware.userExtractor,
+  async (req, res) => {
+    const user = req.user._id;
+    const { status } = req.body;
+
+    const requestId = req.params.id;
+
+    const validStatuses = ["accepted", "rejected"];
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({ error: "Invalid status value" });
+    }
+
+    const exchangeRequest = await ExchangeRequest.findById(requestId);
+    if (!exchangeRequest) {
+      return res.status(404).json({ error: "Exchange request not found" });
+    }
+
+    if (exchangeRequest.toUser.toString() !== user.toString()) {
+      return res
+        .status(403)
+        .json({ error: "Not authorized to update this request" });
+    }
+
+    exchangeRequest.status = status;
+    await exchangeRequest.save();
+
+    res.json(exchangeRequest);
+  }
+);
+
+exchangeRequestsRouter.delete(
+  "/:id",
+  middleware.userExtractor,
+  async (req, res) => {
+    const user = req.user._id;
+    const requestId = req.params.id;
+
+    const exchangeRequest = await ExchangeRequest.findById(requestId);
+    if (!exchangeRequest) {
+      return res.status(404).json({ error: "Exchange request not found" });
+    }
+
+    if (
+      exchangeRequest.fromUser.toString() !== user.toString() &&
+      exchangeRequest.toUser.toString() !== user.toString()
+    ) {
+      return res
+        .status(403)
+        .json({ error: "Not authorized to delete this request" });
+    }
+
+    await ExchangeRequest.findByIdAndDelete(requestId);
+    res.status(204).end();
+  }
+);
+
 module.exports = exchangeRequestsRouter;
