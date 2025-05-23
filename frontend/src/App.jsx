@@ -2,6 +2,7 @@ import RegisterForm from './components/RegisterForm'
 import LoginForm from './components/LoginForm'
 import HomePage from './pages/HomePage'
 import Profile from './pages/Profile'
+import Dashboard from "./pages/Dashboard"
 import {
   BrowserRouter as Router,
   Routes, Route,
@@ -49,6 +50,7 @@ const App = () => {
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/login" element={<LoginForm setUser={setUser} setSuccessMessage={setSuccessMessage} setErrorMessage={setErrorMessage} errorMessage={errorMessage} />} />
             <Route path="me" element={<Profile user={user} />} />
+            <Route path="dashboard" element={<Dashboard user={user} />} />
           </Routes>
         </Box>
       </Router>

@@ -1,8 +1,11 @@
 import { AppBar, Toolbar } from "@mui/material"
-import { Typography, Box, Button } from '@mui/material';
+import { Typography, Box, Button, Popover } from '@mui/material';
 import { Link } from "react-router-dom";
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import HoverPopoverIconButton from '../components/HoverPopoverIconButton';
 
 const NavBar = ({ user, handleLogout }) => {
     return (
@@ -46,16 +49,22 @@ const NavBar = ({ user, handleLogout }) => {
                             }}>
                                 Log out
                             </Button>
-                            <Button
-                                color="inherit"
-                                component={Link}
+                            <HoverPopoverIconButton
                                 to="/me"
-                                sx={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                }}
-                            >
-                                <AccountBoxIcon sx={{ color: 'white' }} />
+                                icon={AccountBoxIcon}
+                                label="Your Profile"
+                            />
+                            <HoverPopoverIconButton
+                                to="/dashboard"
+                                icon={DashboardIcon}
+                                label="Dashboard"
+                            />
+                            <Button color="inherit" sx={{
+                                transition: 'color 0.3s ease',
+                                '&:hover': {
+                                    color: 'secondary.main',
+                                },
+                            }}> <NotificationsIcon />
                             </Button>
                         </>
                     ) : (
