@@ -7,7 +7,7 @@ const HomePage = ({ user, successMessage }) => (
                 {successMessage}
             </Alert>
         )}
-        {user && <h3>welcome {user.username}</h3>}
+        {user && <h2>Welcome, {user.username}</h2>}
     </>
 )
 export default HomePage

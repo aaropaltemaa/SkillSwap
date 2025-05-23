@@ -13,6 +13,7 @@ import exchangeRequestService from './services/exchangerequests'
 const App = () => {
   const [user, setUser] = useState(null)
   const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("")
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedSkillSwapUser')
@@ -45,7 +46,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<HomePage user={user} successMessage={successMessage} />} />
             <Route path="/register" element={<RegisterForm />} />
-            <Route path="/login" element={<LoginForm setUser={setUser} setSuccessMessage={setSuccessMessage} />} />
+            <Route path="/login" element={<LoginForm setUser={setUser} setSuccessMessage={setSuccessMessage} setErrorMessage={setErrorMessage} errorMessage={errorMessage} />} />
           </Routes>
         </Box>
       </Router>

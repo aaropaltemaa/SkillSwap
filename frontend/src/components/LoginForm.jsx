@@ -1,25 +1,32 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Typography, TextField, Button, Box } from '@mui/material';
+import { Typography, TextField, Button, Box, Alert } from '@mui/material';
 import loginService from '../services/login';
 
-const LoginForm = ({ setUser, setSuccessMessage }) => {
+const LoginForm = ({ setUser, setSuccessMessage, setErrorMessage, errorMessage }) => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate();
 
     const handleLogin = async (event) => {
         event.preventDefault();
-        const user = await loginService.login({
-            username,
-            password,
-        })
-        window.localStorage.setItem("loggedSkillSwapUser", JSON.stringify(user))
-        setSuccessMessage("Login successful!");
-        setUsername("")
-        setPassword("")
-        setUser(user)
-        navigate('/')
+        try {
+            const user = await loginService.login({
+                username,
+                password,
+            })
+            window.localStorage.setItem("loggedSkillSwapUser", JSON.stringify(user))
+            setSuccessMessage("Login successful!");
+            setUsername("")
+            setPassword("")
+            setUser(user)
+            navigate('/')
+        } catch (exception) {
+            setErrorMessage("wrong username or password")
+            setTimeout(() => {
+                setErrorMessage(null)
+            }, 5000)
+        }
     }
 
     return (
@@ -27,6 +34,11 @@ const LoginForm = ({ setUser, setSuccessMessage }) => {
             <Typography variant="h4" sx={{ mb: 4 }}>
                 Log in
             </Typography>
+            {errorMessage && (
+                <Alert severity="error" sx={{ mb: 2 }}>
+                    {errorMessage}
+                </Alert>
+            )}
             <Box
                 component="form"
                 onSubmit={handleLogin}
