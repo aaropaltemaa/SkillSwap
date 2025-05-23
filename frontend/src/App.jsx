@@ -1,6 +1,7 @@
 import RegisterForm from './components/RegisterForm'
 import LoginForm from './components/LoginForm'
 import HomePage from './pages/HomePage'
+import Profile from './pages/Profile'
 import {
   BrowserRouter as Router,
   Routes, Route,
@@ -44,9 +45,10 @@ const App = () => {
         <NavBar user={user} handleLogout={handleLogout} />
         <Box sx={{ mt: 5, mx: 36, textAlign: "center" }}>
           <Routes>
-            <Route path="/" element={<HomePage user={user} successMessage={successMessage} />} />
+            <Route path="/" element={<HomePage successMessage={successMessage} />} />
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/login" element={<LoginForm setUser={setUser} setSuccessMessage={setSuccessMessage} setErrorMessage={setErrorMessage} errorMessage={errorMessage} />} />
+            <Route path="me" element={<Profile user={user} />} />
           </Routes>
         </Box>
       </Router>

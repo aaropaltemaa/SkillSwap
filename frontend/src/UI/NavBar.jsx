@@ -2,6 +2,7 @@ import { AppBar, Toolbar } from "@mui/material"
 import { Typography, Box, Button } from '@mui/material';
 import { Link } from "react-router-dom";
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
 const NavBar = ({ user, handleLogout }) => {
     return (
@@ -25,7 +26,7 @@ const NavBar = ({ user, handleLogout }) => {
                         SkillSwap
                     </Typography>
                 </Box>
-                <Box>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <Button color="inherit" component={Link} to="/register" sx={{
                         transition: 'color 0.3s ease',
                         '&:hover': {
@@ -36,14 +37,27 @@ const NavBar = ({ user, handleLogout }) => {
                         Sign Up
                     </Button>
                     {user ? (
-                        <Button color="inherit" onClick={handleLogout} sx={{
-                            transition: 'color 0.3s ease',
-                            '&:hover': {
-                                color: 'secondary.main',
-                            },
-                        }}>
-                            Log out
-                        </Button>
+                        <>
+                            <Button color="inherit" onClick={handleLogout} sx={{
+                                transition: 'color 0.3s ease',
+                                '&:hover': {
+                                    color: 'secondary.main',
+                                },
+                            }}>
+                                Log out
+                            </Button>
+                            <Button
+                                color="inherit"
+                                component={Link}
+                                to="/me"
+                                sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <AccountBoxIcon sx={{ color: 'white' }} />
+                            </Button>
+                        </>
                     ) : (
                         <Button color="inherit" component={Link} to="/login" sx={{
                             transition: 'color 0.3s ease',
