@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Container, Typography, TextField, Button, Box } from '@mui/material';
+import { Typography, TextField, Button, Box } from '@mui/material';
 import registerService from '../services/register';
 
 const RegisterForm = () => {
@@ -26,7 +26,7 @@ const RegisterForm = () => {
     }
 
     return (
-        <Container maxWidth="sm" sx={{ mt: 8 }}>
+        <>
             <Typography variant="h4" sx={{ mb: 4, textAlign: 'center' }}>
                 Register
             </Typography>
@@ -78,8 +78,7 @@ const RegisterForm = () => {
                     Already have an account? <Link to="/login">Log in</Link>
                 </Typography>
             </Box>
-        </Container>
-
+        </>
     );
 }
 

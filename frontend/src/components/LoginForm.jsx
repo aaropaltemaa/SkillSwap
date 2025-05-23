@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Typography, TextField, Button, Box } from '@mui/material';
+import { Typography, TextField, Button, Box } from '@mui/material';
 import loginService from '../services/login';
 
-const LoginForm = () => {
+const LoginForm = ({ setUser, setSuccessMessage }) => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate();
@@ -15,14 +15,16 @@ const LoginForm = () => {
             password,
         })
         window.localStorage.setItem("loggedSkillSwapUser", JSON.stringify(user))
-        navigate('/')
+        setSuccessMessage("Login successful!");
         setUsername("")
         setPassword("")
+        setUser(user)
+        navigate('/')
     }
 
     return (
-        <Container maxWidth="sm" sx={{ mt: 8 }}>
-            <Typography variant="h4" sx={{ mb: 4, textAlign: 'center' }}>
+        <>
+            <Typography variant="h4" sx={{ mb: 4 }}>
                 Log in
             </Typography>
             <Box
@@ -57,8 +59,7 @@ const LoginForm = () => {
                     Log in
                 </Button>
             </Box>
-        </Container>
-
+        </>
     );
 }
 

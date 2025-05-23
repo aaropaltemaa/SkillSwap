@@ -1,12 +1,14 @@
 import { AppBar, Toolbar } from "@mui/material"
-import { Container, Typography, Box, Stack, Button } from '@mui/material';
+import { Typography, Box, Button } from '@mui/material';
 import { Link } from "react-router-dom";
+import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 
-const NavBar = () => {
+const NavBar = ({ user, handleLogout }) => {
     return (
-        <div>
-            <AppBar position="static">
-                <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <AppBar position="static" sx={{ borderRadius: 6, mt: 4, boxShadow: 8, padding: 0.25 }}>
+            <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Box style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                    <SwapHorizIcon />
                     <Typography
                         variant="h5"
                         color="inherit"
@@ -22,17 +24,27 @@ const NavBar = () => {
                     >
                         SkillSwap
                     </Typography>
-
-                    <Box>
-                        <Button color="inherit" component={Link} to="/register" sx={{
+                </Box>
+                <Box>
+                    <Button color="inherit" component={Link} to="/register" sx={{
+                        transition: 'color 0.3s ease',
+                        '&:hover': {
+                            color: 'secondary.main',
+                        },
+                        mr: 1,
+                    }}>
+                        Sign Up
+                    </Button>
+                    {user ? (
+                        <Button color="inherit" onClick={handleLogout} sx={{
                             transition: 'color 0.3s ease',
                             '&:hover': {
                                 color: 'secondary.main',
                             },
-                            mr: 1,
                         }}>
-                            Sign Up
+                            Log out
                         </Button>
+                    ) : (
                         <Button color="inherit" component={Link} to="/login" sx={{
                             transition: 'color 0.3s ease',
                             '&:hover': {
@@ -41,10 +53,10 @@ const NavBar = () => {
                         }}>
                             Log in
                         </Button>
-                    </Box>
-                </Toolbar>
-            </AppBar>
-        </div>
+                    )}
+                </Box>
+            </Toolbar>
+        </AppBar>
     )
 }
 
