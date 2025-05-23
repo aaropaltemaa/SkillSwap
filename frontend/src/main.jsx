@@ -1,9 +1,7 @@
 import ReactDOM from 'react-dom/client';
-import { ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import theme from './styles/theme';
-
 import App from './App';
+import { ThemeProvider, CssBaseline } from '@mui/material';
+import theme from './styles/theme';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <ThemeProvider theme={theme}>

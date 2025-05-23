@@ -1,26 +1,29 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Container, Typography, TextField, Button, Box } from '@mui/material';
+import registerService from '../services/register';
 
 const RegisterForm = () => {
     const navigate = useNavigate();
-    const [justRegistered, setJustRegistered] = useState(false);
     const [username, setUsername] = useState('');
     const [name, setName] = useState('')
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
 
-    useEffect(() => {
-        if (justRegistered) {
-            navigate('/');
-        }
-    }, [justRegistered, navigate]);
-
     const handleRegister = async (event) => {
         event.preventDefault();
-        setJustRegistered(true)
-        console.log("test")
-    };
+        await registerService.register({
+            username,
+            password,
+            name,
+            email
+        })
+        navigate('/')
+        setUsername("")
+        setPassword("")
+        setName("")
+        setEmail("")
+    }
 
     return (
         <Container maxWidth="sm" sx={{ mt: 8 }}>
@@ -30,7 +33,7 @@ const RegisterForm = () => {
             <Box
                 component="form"
                 onSubmit={handleRegister}
-                autoComplete="off" // Prevents the whole form from being auto-filled
+                autoComplete="off"
                 sx={{
                     display: 'flex',
                     flexDirection: 'column',
