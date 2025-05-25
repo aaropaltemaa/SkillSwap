@@ -1,13 +1,26 @@
 import { AppBar, Toolbar } from "@mui/material"
-import { Typography, Box, Button, Menu, MenuItem } from '@mui/material';
+import { Typography, Box, Button, Menu, MenuItem, IconButton } from '@mui/material';
 import { Link } from "react-router-dom";
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import HoverPopoverIconButton from '../components/HoverPopoverIconButton';
+import { useState } from "react";
 
 const NavBar = ({ user, handleLogout }) => {
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+
+    const handleMenuOpen = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+
     return (
         <AppBar position="static" sx={{ borderRadius: 6, mt: 4, boxShadow: 8, padding: 0.25 }}>
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -66,6 +79,25 @@ const NavBar = ({ user, handleLogout }) => {
                                 },
                             }}> <NotificationsIcon />
                             </Button>
+                            <IconButton
+                                color="inherit"
+                                onClick={handleMenuOpen}
+                            >
+                                <MoreVertIcon />
+                            </IconButton>
+                            <Menu
+                                anchorEl={anchorEl}
+                                open={open}
+                                onClose={handleMenuClose}
+                            >
+                                <MenuItem component={Link} to="/my-requests" onClick={handleMenuClose}>
+                                    My Requests
+                                </MenuItem>
+                                <MenuItem component={Link} to="/about" onClick={handleMenuClose}>
+                                    About
+                                </MenuItem>
+                                {/* Add more items as needed */}
+                            </Menu>
                         </>
                     ) : (
                         <Button color="inherit" component={Link} to="/login" sx={{
