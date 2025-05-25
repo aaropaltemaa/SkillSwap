@@ -3,9 +3,9 @@ import { Typography, Box, Button, Menu, MenuItem, IconButton } from '@mui/materi
 import { Link } from "react-router-dom";
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import DashboardIcon from '@mui/icons-material/Dashboard';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import HoverPopoverIconButton from '../components/HoverPopoverIconButton';
 import { useState } from "react";
 
@@ -68,9 +68,9 @@ const NavBar = ({ user, handleLogout }) => {
                                 label="Your Profile"
                             />
                             <HoverPopoverIconButton
-                                to="/dashboard"
-                                icon={DashboardIcon}
-                                label="Dashboard"
+                                to="/exchange-requests"
+                                icon={AddCircleIcon}
+                                label="Create Exchange Request"
                             />
                             <Button color="inherit" sx={{
                                 transition: 'color 0.3s ease',
@@ -96,7 +96,6 @@ const NavBar = ({ user, handleLogout }) => {
                                 <MenuItem component={Link} to="/about" onClick={handleMenuClose}>
                                     About
                                 </MenuItem>
-                                {/* Add more items as needed */}
                             </Menu>
                         </>
                     ) : (
