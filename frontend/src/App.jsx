@@ -17,14 +17,9 @@ import userService from './services/users'
 const App = () => {
   const [user, setUser] = useState(null)
   const [users, setUsers] = useState([])
+  const [requests, setRequests] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("")
-
-  useEffect(() => {
-    if (user && user.token) {
-      exchangeRequestService.setToken(user.token);
-    }
-  }, [user]);
 
   useEffect(() => {
     userService.getAll().then(users => {
@@ -41,6 +36,19 @@ const App = () => {
       exchangeRequestService.setToken(user.token)
     }
   }, [])
+
+  useEffect(() => {
+    if (!user) return; // Wait for user to be loaded
+    const fetchRequests = async () => {
+      try {
+        const data = await exchangeRequestService.getAll();
+        setRequests(data);
+      } catch (error) {
+        console.error('Failed to fetch exchange requests:', error);
+      }
+    };
+    fetchRequests();
+  }, [user]);
 
   useEffect(() => {
     if (successMessage) {
@@ -66,7 +74,10 @@ const App = () => {
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/login" element={<LoginForm setUser={setUser} setSuccessMessage={setSuccessMessage} setErrorMessage={setErrorMessage} errorMessage={errorMessage} />} />
             <Route path="create-exchange" element={<CreateExchangeForm user={user} users={users} />} />
-            <Route path="/exchange-requests" element={<ExchangeRequestsPage />} />
+            <Route
+              path="/exchange-requests"
+              element={<ExchangeRequestsPage currentUserId={user ? user.id : null} requests={requests} />}
+            />
             <Route path="me" element={<Profile user={user} />} />
           </Routes>
         </Box>
