@@ -68,7 +68,7 @@ const NavBar = ({ user, handleLogout }) => {
                                 label="Your Profile"
                             />
                             <HoverPopoverIconButton
-                                to="/exchange-requests"
+                                to="/create-exchange"
                                 icon={AddCircleIcon}
                                 label="Create Exchange Request"
                             />
@@ -90,7 +90,7 @@ const NavBar = ({ user, handleLogout }) => {
                                 open={open}
                                 onClose={handleMenuClose}
                             >
-                                <MenuItem component={Link} to="/my-requests" onClick={handleMenuClose}>
+                                <MenuItem component={Link} to="/exchange-requests" onClick={handleMenuClose}>
                                     My Requests
                                 </MenuItem>
                                 <MenuItem component={Link} to="/about" onClick={handleMenuClose}>

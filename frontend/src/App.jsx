@@ -3,6 +3,7 @@ import LoginForm from './components/LoginForm'
 import CreateExchangeForm from "./components/CreateExchangeForm"
 import HomePage from './pages/HomePage'
 import Profile from './pages/Profile'
+import ExchangeRequestsPage from './pages/ExchangeRequestsPage';
 import {
   BrowserRouter as Router,
   Routes, Route,
@@ -11,11 +12,26 @@ import NavBar from './UI/NavBar'
 import { Box } from '@mui/material'
 import { useEffect, useState } from 'react'
 import exchangeRequestService from './services/exchangerequests'
+import userService from './services/users'
 
 const App = () => {
   const [user, setUser] = useState(null)
+  const [users, setUsers] = useState([])
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("")
+
+  useEffect(() => {
+    if (user && user.token) {
+      exchangeRequestService.setToken(user.token);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    userService.getAll().then(users => {
+      setUsers(users)
+      console.log("users fetched:", users)
+    })
+  }, [])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedSkillSwapUser')
@@ -49,7 +65,8 @@ const App = () => {
             <Route path="/" element={<HomePage successMessage={successMessage} />} />
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/login" element={<LoginForm setUser={setUser} setSuccessMessage={setSuccessMessage} setErrorMessage={setErrorMessage} errorMessage={errorMessage} />} />
-            <Route path="exchange-requests" element={<CreateExchangeForm />} />
+            <Route path="create-exchange" element={<CreateExchangeForm user={user} users={users} />} />
+            <Route path="/exchange-requests" element={<ExchangeRequestsPage />} />
             <Route path="me" element={<Profile user={user} />} />
           </Routes>
         </Box>

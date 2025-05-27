@@ -45,6 +45,11 @@ const theme = createTheme({
           borderRadius: 8,
           paddingInline: "20px",
           fontSize: "1rem",
+          textDecoration: "none",
+          transition: "color 0.3s ease",
+          "&:hover": {
+            color: "#A67EF5",
+          },
         },
       },
     },

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Typography, TextField, Button, Box, Alert } from '@mui/material';
 import loginService from '../services/login';
+import exchangeRequestService from '../services/exchangerequests';
 
 const LoginForm = ({ setUser, setSuccessMessage, setErrorMessage, errorMessage }) => {
     const [username, setUsername] = useState("")
@@ -20,6 +21,7 @@ const LoginForm = ({ setUser, setSuccessMessage, setErrorMessage, errorMessage }
             setUsername("")
             setPassword("")
             setUser(user)
+            exchangeRequestService.setToken(user.token)
             navigate('/')
         } catch (exception) {
             setErrorMessage("wrong username or password")
