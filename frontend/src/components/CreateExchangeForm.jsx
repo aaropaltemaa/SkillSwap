@@ -1,53 +1,45 @@
-import { Typography, Box, Button, TextField, InputLabel, FormControl, Alert, Stack, Autocomplete, Paper } from '@mui/material';
+import { Typography, Box, Button, TextField, Stack, Autocomplete, Paper } from '@mui/material';
 import { useState } from 'react';
 import exchangeRequestService from '../services/exchangerequests';
 
-const CreateExchangeForm = ({ user, users }) => {
-    const [toUser, setToUser] = useState("");
+const CreateExchangeForm = ({ user, users, setRequests, requests }) => {
+    const [toUser, setToUser] = useState(null);
     const [skillsOffered, setSkillsOffered] = useState([]);
     const [skillsWanted, setSkillsWanted] = useState([]);
 
-    const otherUsers = users.filter(u => u.username !== user.username)
+    const otherUsers = users.filter(u => u.username !== user.username);
 
-    const handleSubmit = async () => {
-        console.log('toUser:', toUser);
-        console.log('skillsOffered:', skillsOffered);
-        console.log('skillsWanted:', skillsWanted);
+    const handleSubmit = async (event) => {
+        event.preventDefault()
+        console.log("skills offered:", skillsOffered)
+        console.log("skills wanted:", skillsWanted)
+        console.log("to user", toUser);
 
-        if (!toUser || skillsOffered.length === 0 || skillsWanted.length === 0) {
-            alert("Please fill out all required fields.");
-            return;
-        }
-
-        try {
-            const newExchangeRequest = await exchangeRequestService.create({
-                toUser,
-                skillsOffered,
-                skillsWanted,
-            });
-            alert("Exchange request sent!");
-            setToUser('');
-            setSkillsOffered([]);
-            setSkillsWanted([]);
-        } catch (error) {
-            console.error(error);
-            alert("Failed to send request.");
-        }
+        const newExchangeRequest = await exchangeRequestService.create({
+            toUser: toUser.id,
+            skillsOffered,
+            skillsWanted
+        })
+        setRequests(requests.concat(newExchangeRequest))
+        setToUser(null)
+        setSkillsOffered([])
+        setSkillsWanted([])
     };
 
     return (
-        <Box sx={{ maxWidth: 600, mx: "auto", }}>
+        <Box sx={{ maxWidth: 600, mx: 'auto' }}>
             <Paper elevation={3} sx={{ p: 4, borderRadius: 3 }}>
                 <Typography variant="h5" fontWeight={600} gutterBottom>
                     Create a Skill Exchange
                 </Typography>
-                <Box mt={3} /> {/* Add vertical space */}
-                <Stack spacing={3}>
+
+                <Stack spacing={3} mt={3}>
+                    {/* User Selector */}
                     <Autocomplete
                         options={otherUsers}
                         getOptionLabel={(option) => option.username}
-                        value={users.find(u => u.id === toUser) || null}
-                        onChange={(e, newValue) => setToUser(newValue?.id || '')}
+                        value={toUser}
+                        onChange={(e, newValue) => setToUser(newValue)}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
@@ -58,21 +50,24 @@ const CreateExchangeForm = ({ user, users }) => {
                         )}
                     />
 
+                    {/* Skills Offered */}
                     <Autocomplete
                         multiple
-                        options={skillsOffered}
+                        freeSolo
+                        options={[]} // Add predefined skills if you want
                         value={skillsOffered}
                         onChange={(e, newValue) => setSkillsOffered(newValue)}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
-                                variant="outlined"
                                 label="Skills Offered"
                                 placeholder="e.g. Python, Guitar, Design"
                                 helperText="List the skills you're offering to teach or share"
                             />
                         )}
                     />
+
+                    {/* Skills Wanted */}
                     <Autocomplete
                         multiple
                         freeSolo
@@ -82,19 +77,14 @@ const CreateExchangeForm = ({ user, users }) => {
                         renderInput={(params) => (
                             <TextField
                                 {...params}
-                                variant="outlined"
                                 label="Skills Wanted"
                                 placeholder="e.g. Public Speaking, Cooking"
                                 helperText="List the skills you want to learn"
                             />
                         )}
                     />
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleSubmit}
-                        sx={{ mt: 3 }}
-                    >
+
+                    <Button variant="contained" color="primary" onClick={handleSubmit}>
                         Send Exchange Request
                     </Button>
                 </Stack>
@@ -103,4 +93,4 @@ const CreateExchangeForm = ({ user, users }) => {
     );
 };
 
-export default CreateExchangeForm
+export default CreateExchangeForm;
