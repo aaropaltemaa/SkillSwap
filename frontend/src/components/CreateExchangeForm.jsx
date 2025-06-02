@@ -1,29 +1,30 @@
 import { Typography, Box, Button, TextField, Stack, Autocomplete, Paper } from '@mui/material';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import exchangeRequestService from '../services/exchangerequests';
 
-const CreateExchangeForm = ({ user, users, setRequests, requests }) => {
+const CreateExchangeForm = ({ user, users, setRequests, requests, setSuccessMessage }) => {
     const [toUser, setToUser] = useState(null);
     const [skillsOffered, setSkillsOffered] = useState([]);
     const [skillsWanted, setSkillsWanted] = useState([]);
+    const navigate = useNavigate()
 
     const otherUsers = users.filter(u => u.username !== user.username);
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-        console.log("skills offered:", skillsOffered)
-        console.log("skills wanted:", skillsWanted)
-        console.log("to user", toUser);
 
         const newExchangeRequest = await exchangeRequestService.create({
             toUser: toUser.id,
             skillsOffered,
             skillsWanted
         })
+        setSuccessMessage("New exchange request created!")
         setRequests(requests.concat(newExchangeRequest))
         setToUser(null)
         setSkillsOffered([])
         setSkillsWanted([])
+        navigate("/")
     };
 
     return (
@@ -54,7 +55,7 @@ const CreateExchangeForm = ({ user, users, setRequests, requests }) => {
                     <Autocomplete
                         multiple
                         freeSolo
-                        options={[]} // Add predefined skills if you want
+                        options={[]}
                         value={skillsOffered}
                         onChange={(e, newValue) => setSkillsOffered(newValue)}
                         renderInput={(params) => (
