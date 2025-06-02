@@ -1,5 +1,6 @@
-import { Card, CardContent, Typography, Stack, Chip, Box, Avatar, Divider } from '@mui/material';
+import { Card, CardContent, Typography, Stack, Chip, Box, Avatar, Divider, Button } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
+import exchangeRequestService from '../services/exchangerequests';
 
 const statusColors = {
     pending: 'warning.main',
@@ -7,8 +8,10 @@ const statusColors = {
     rejected: 'error.main',
 };
 
-const ExchangeRequestsPage = ({ requests, currentUserId }) => {
-    if (requests.length === 0) {
+const ExchangeRequestsPage = ({ requests, setRequests, currentUserId }) => {
+    const receivedRequests = requests.filter(req => req.toUser.id === currentUserId);
+
+    if (receivedRequests.length === 0) {
         return (
             <Box display="flex" justifyContent="center" alignItems="center" minHeight="40vh">
                 <Typography variant="h6" color="text.secondary">
@@ -18,9 +21,22 @@ const ExchangeRequestsPage = ({ requests, currentUserId }) => {
         );
     }
 
+    const handleRespond = async (requestId, newStatus) => {
+        try {
+            const updatedRequest = await exchangeRequestService.updateStatus(requestId, newStatus);
+            const updatedRequests = requests.map((r) =>
+                r.id === requestId ? updatedRequest : r
+            );
+            setRequests(updatedRequests);
+        } catch (error) {
+            console.error("Failed to update request status:", error);
+        }
+    };
+
+
     return (
         <Stack spacing={3} sx={{ maxWidth: 600, mx: 'auto', mt: 4 }}>
-            {requests.map((req) => {
+            {receivedRequests.map((req) => {
                 const isSent = req.fromUser.id === currentUserId;
                 const user = isSent ? req.toUser : req.fromUser;
                 const statusColor = statusColors[req.status] || 'grey.500';
@@ -97,6 +113,25 @@ const ExchangeRequestsPage = ({ requests, currentUserId }) => {
                                             />
                                         ))}
                                     </Stack>
+                                    <Stack direction="row" spacing={2} mt={2}>
+                                        <Button
+                                            variant="contained"
+                                            color="success"
+                                            onClick={() => handleRespond(req.id, 'accepted')}
+                                            sx={{ flex: 1 }}
+                                        >
+                                            Accept
+                                        </Button>
+                                        <Button
+                                            variant="outlined"
+                                            color="error"
+                                            onClick={() => handleRespond(req.id, 'rejected')}
+                                            sx={{ flex: 1 }}
+                                        >
+                                            Decline
+                                        </Button>
+                                    </Stack>
+
                                 </Box>
                             </Stack>
                         </CardContent>
