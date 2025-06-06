@@ -1,17 +1,30 @@
 import { useState } from "react"
+import loginService from "../services/login"
+import exchangeRequestService from "../services/exchangerequests"
+import { useNavigate } from "react-router-dom"
 
-const LoginForm = () => {
+const LoginForm = ({ setUser }) => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+    const navigate = useNavigate()
 
-    const handleLogin = (event) => {
+    const handleLogin = async (event) => {
         event.preventDefault()
-        console.log("button clicked")
+        const user = await loginService.login({
+            username, password,
+        })
+
+        window.localStorage.setItem("loggedSkillSwapUser", JSON.stringify(user))
+        exchangeRequestService.setToken(user.token)
+        setUser(user)
+        setUsername('')
+        setPassword('')
+        navigate("/")
     }
 
     return (
         <section className="max-w-md mx-auto px-4">
-            <h1 className="text-4xl sm:text-5xl font-semibold text-gray-900 mb-15">
+            <h1 className="text-4xl sm:text-5xl font-semibold text-gray-900 mb-13">
                 Log in
             </h1>
             <form onSubmit={handleLogin} className="space-y-6">
