@@ -11,6 +11,16 @@ import exchangeRequestService from "./services/exchangerequests"
 
 const App = () => {
   const [user, setUser] = useState(null)
+  const [exchangeRequests, setExcangeRequests] = useState([])
+
+  useEffect(() => {
+    if (user) {
+      exchangeRequestService.getAll().then(exchangeRequests => {
+        setExcangeRequests(exchangeRequests);
+        console.log("exchange requests", exchangeRequests);
+      });
+    }
+  }, [user])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedSkillSwapUser')
