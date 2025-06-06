@@ -1,5 +1,6 @@
 import NavBar from "./components/NavBar"
 import LoginForm from "./components/LoginForm"
+import RegisterForm from "./components/RegisterForm"
 import HomePage from "./pages/HomePage"
 import {
   BrowserRouter as Router,
@@ -27,6 +28,7 @@ const App = () => {
         <Routes >
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginForm setUser={setUser} />} />
+          <Route path="/register" element={<RegisterForm />} />
         </Routes>
       </div>
     </Router>

@@ -15,7 +15,7 @@ const NavBar = ({ setUser, user }) => {
                         onClick={handleLogout}
                         className="hover:text-blue-600 transition bg-transparent border-none cursor-pointer"
                     >
-                        Log Out
+                        Log out
                     </button>
                 ) : (
                     <>
