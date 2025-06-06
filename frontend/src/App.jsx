@@ -10,10 +10,12 @@ const App = () => {
   return (
     <Router>
       <NavBar />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginForm />} />
-      </Routes>
+      <div className="py-20 text-center">
+        <Routes >
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginForm />} />
+        </Routes>
+      </div>
     </Router>
   )
 }
