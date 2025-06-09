@@ -2,6 +2,7 @@ import NavBar from "./components/NavBar"
 import LoginForm from "./components/LoginForm"
 import RegisterForm from "./components/RegisterForm"
 import HomePage from "./pages/HomePage"
+import ExchangeRequestsPage from "./pages/ExchangeRequestsPage"
 import {
   BrowserRouter as Router,
   Routes, Route,
@@ -39,6 +40,7 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginForm setUser={setUser} />} />
           <Route path="/register" element={<RegisterForm />} />
+          <Route path="/my-requests" element={<ExchangeRequestsPage exchangeRequests={exchangeRequests} />} />
         </Routes>
       </div>
     </Router>

@@ -11,12 +11,20 @@ const NavBar = ({ setUser, user }) => {
             <Link to="/" className="hover:text-blue-600 transition ">Logo</Link>
             <div className="flex gap-8">
                 {user ? (
-                    <button
-                        onClick={handleLogout}
-                        className="hover:text-blue-600 transition bg-transparent border-none cursor-pointer"
-                    >
-                        Log out
-                    </button>
+                    <>
+                        <button
+                            onClick={handleLogout}
+                            className="hover:text-blue-600 transition bg-transparent border-none cursor-pointer"
+                        >
+                            Log out
+                        </button>
+                        <Link
+                            to="my-requests"
+                            className="hover:text-blue-600 transition bg-transparent border-none cursor-pointer"
+                        >
+                            My Requests
+                        </Link>
+                    </>
                 ) : (
                     <>
                         <Link to="/register" className="hover:text-blue-600 transition">Sign Up</Link>
