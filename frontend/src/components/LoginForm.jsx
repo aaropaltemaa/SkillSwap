@@ -3,7 +3,7 @@ import loginService from "../services/login"
 import exchangeRequestService from "../services/exchangerequests"
 import { useNavigate } from "react-router-dom"
 
-const LoginForm = ({ setUser }) => {
+const LoginForm = ({ setUser, setSuccessMessage }) => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate()
@@ -17,6 +17,7 @@ const LoginForm = ({ setUser }) => {
         window.localStorage.setItem("loggedSkillSwapUser", JSON.stringify(user))
         exchangeRequestService.setToken(user.token)
         setUser(user)
+        setSuccessMessage(`Welcome back, ${user.username}!`)
         setUsername('')
         setPassword('')
         navigate("/")
