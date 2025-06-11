@@ -1,6 +1,7 @@
 import NavBar from "./components/NavBar"
 import LoginForm from "./components/LoginForm"
 import RegisterForm from "./components/RegisterForm"
+import CreateExchangeForm from "./components/CreateExchangeForm"
 import HomePage from "./pages/HomePage"
 import ExchangeRequestsPage from "./pages/ExchangeRequestsPage"
 import {
@@ -16,7 +17,6 @@ const App = () => {
   const [users, setUsers] = useState([])
   const [exchangeRequests, setExchangeRequests] = useState([])
   const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("")
 
   useEffect(() => {
     userService.getAll().then(users => {
@@ -59,9 +59,10 @@ const App = () => {
     <Router>
       <NavBar user={user} setUser={setUser} />
       <div className="py-20 text-center">
-        <Routes >
+        <Routes>
           <Route path="/" element={<HomePage successMessage={successMessage} user={user} />} />
           <Route path="/login" element={<LoginForm setUser={setUser} setSuccessMessage={setSuccessMessage} />} />
+          <Route path="create-exchange" element={<CreateExchangeForm user={user} users={users} exchangeRequests={exchangeRequests} setExchangeRequests={setExchangeRequests} />} />
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/my-requests" element={<ExchangeRequestsPage exchangeRequests={exchangeRequests} />} />
         </Routes>

@@ -24,6 +24,12 @@ const NavBar = ({ setUser, user }) => {
                         >
                             My Requests
                         </Link>
+                        <Link
+                            to="create-exchange"
+                            className="hover:text-blue-600 transition bg-transparent border-none cursor-pointer"
+                        >
+                            Create
+                        </Link>
                     </>
                 ) : (
                     <>
