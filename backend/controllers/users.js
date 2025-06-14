@@ -82,4 +82,12 @@ usersRouter.put("/me", middleware.userExtractor, async (req, res) => {
   res.json(updatedUser);
 });
 
+usersRouter.delete("/me", middleware.userExtractor, async (req, res) => {
+  const userId = req.user._id;
+
+  await User.findByIdAndDelete(userId);
+  res.status(204).end();
+}
+);
+
 module.exports = usersRouter;
