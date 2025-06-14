@@ -64,7 +64,7 @@ const App = () => {
           <Route path="/login" element={<LoginForm setUser={setUser} setSuccessMessage={setSuccessMessage} />} />
           <Route path="create-exchange" element={<CreateExchangeForm user={user} users={users} exchangeRequests={exchangeRequests} setExchangeRequests={setExchangeRequests} setSuccessMessage={setSuccessMessage}/>} />
           <Route path="/register" element={<RegisterForm />} />
-          <Route path="/my-requests" element={<ExchangeRequestsPage exchangeRequests={exchangeRequests} />} />
+          <Route path="/my-requests" element={<ExchangeRequestsPage exchangeRequests={exchangeRequests} user={user}/>} />
         </Routes>
       </div>
     </Router>
