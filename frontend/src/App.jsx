@@ -14,6 +14,7 @@ const App = () => {
   const [users, setUsers] = useState([]);
   const [exchangeRequests, setExchangeRequests] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     userService.getAll().then((users) => {
@@ -52,6 +53,15 @@ const App = () => {
     }
   }, [successMessage]);
 
+  useEffect(() => {
+    if (errorMessage) {
+      const timer = setTimeout(() => {
+        setErrorMessage("");
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [errorMessage]);
+
   return (
     <Router>
       <NavBar user={user} setUser={setUser} />
@@ -67,6 +77,8 @@ const App = () => {
               <LoginForm
                 setUser={setUser}
                 setSuccessMessage={setSuccessMessage}
+                setErrorMessage={setErrorMessage}
+                errorMessage={errorMessage}
               />
             }
           />
@@ -88,6 +100,7 @@ const App = () => {
             element={
               <ExchangeRequestsPage
                 exchangeRequests={exchangeRequests}
+                setExchangeRequests={setExchangeRequests}
                 user={user}
               />
             }

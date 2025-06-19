@@ -3,25 +3,34 @@ import loginService from "../services/login";
 import exchangeRequestService from "../services/exchangerequests";
 import { useNavigate } from "react-router-dom";
 
-const LoginForm = ({ setUser, setSuccessMessage }) => {
+const LoginForm = ({
+  setUser,
+  setSuccessMessage,
+  setErrorMessage,
+  errorMessage,
+}) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async (event) => {
     event.preventDefault();
-    const user = await loginService.login({
-      username,
-      password,
-    });
+    try {
+      const user = await loginService.login({
+        username,
+        password,
+      });
 
-    window.localStorage.setItem("loggedSkillSwapUser", JSON.stringify(user));
-    exchangeRequestService.setToken(user.token);
-    setUser(user);
-    setSuccessMessage(`Welcome back, ${user.username}!`);
-    setUsername("");
-    setPassword("");
-    navigate("/");
+      window.localStorage.setItem("loggedSkillSwapUser", JSON.stringify(user));
+      exchangeRequestService.setToken(user.token);
+      setUser(user);
+      setSuccessMessage(`Welcome back, ${user.username}!`);
+      setUsername("");
+      setPassword("");
+      navigate("/");
+    } catch (err) {
+      setErrorMessage("Invalid username or password.");
+    }
   };
 
   return (
@@ -29,6 +38,11 @@ const LoginForm = ({ setUser, setSuccessMessage }) => {
       <h1 className="text-4xl sm:text-5xl font-semibold text-gray-900 mb-13">
         Log in
       </h1>
+      {errorMessage && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-4">
+          {errorMessage}
+        </div>
+      )}
       <form onSubmit={handleLogin} className="space-y-6">
         <div>
           Username
