@@ -1,5 +1,6 @@
 import Hero from "../components/Hero";
 import HowItWorks from "../components/HowItWorks";
+import PopularSkills from "../components/PopularSkills";
 
 const HomePage = ({ successMessage }) => (
   <>
@@ -11,6 +12,7 @@ const HomePage = ({ successMessage }) => (
     <Hero />
     <div className="mt-4"></div>
     <HowItWorks />
+    <PopularSkills />
   </>
 );
 
