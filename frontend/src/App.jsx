@@ -69,7 +69,7 @@ const App = () => {
         <Routes>
           <Route
             path="/"
-            element={<HomePage successMessage={successMessage} user={user} />}
+            element={<HomePage successMessage={successMessage} />}
           />
           <Route
             path="/login"
