@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 const skills = [
   { icon: "💻", label: "Programming" },
   { icon: "🎨", label: "Art & Design" },
@@ -20,15 +22,19 @@ const PopularSkills = () => {
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
           {skills.map((skill, index) => (
-            <div
+            <motion.div
               key={index}
               className="bg-gray-50 hover:bg-indigo-100 transition-colors rounded-xl shadow-sm p-6 text-center cursor-pointer"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
             >
               <div className="text-3xl mb-2">{skill.icon}</div>
               <h3 className="text-lg font-medium text-gray-800">
                 {skill.label}
               </h3>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
