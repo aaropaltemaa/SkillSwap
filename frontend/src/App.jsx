@@ -2,6 +2,7 @@ import NavBar from "./components/NavBar";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
 import CreateExchangeForm from "./components/CreateExchangeForm";
+import UpcomingExchanges from "./components/UpcomingExchanges";
 import HomePage from "./pages/HomePage";
 import ExchangeRequestsPage from "./pages/ExchangeRequestsPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -104,6 +105,10 @@ const App = () => {
                 user={user}
               />
             }
+          />
+          <Route
+            path="/exchanges/upcoming"
+            element={<UpcomingExchanges user={user} />}
           />
         </Routes>
       </div>

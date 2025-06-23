@@ -12,12 +12,13 @@ const ExchangeRequestsPage = ({
     return <div>Please log in to view your exchange requests.</div>;
   }
 
-  const sentRequests = exchangeRequests.filter(
-    (r) => r.fromUser.id === user.id
-  );
-  const receivedRequests = exchangeRequests.filter(
-    (r) => r.toUser.id === user.id
-  );
+  const sentRequests = exchangeRequests
+    .filter((r) => r.fromUser.id === user.id)
+    .filter((r) => r.status !== "accepted");
+
+  const receivedRequests = exchangeRequests
+    .filter((r) => r.toUser.id === user.id)
+    .filter((r) => r.status !== "accepted");
 
   const statusColor = {
     pending: "bg-yellow-100 text-yellow-800",
@@ -41,7 +42,7 @@ const ExchangeRequestsPage = ({
 
   return (
     <div className="max-w-2xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">My Exchange Requests</h1>
+      <h1 className="text-3xl font-bold mb-4">My Exchange Requests</h1>
       {error && <div className="text-red-600 mb-4">{error}</div>}
 
       <section className="mb-8">
