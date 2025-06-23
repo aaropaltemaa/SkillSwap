@@ -2,6 +2,7 @@ import Hero from "../components/Hero";
 import HowItWorks from "../components/HowItWorks";
 import PopularSkills from "../components/PopularSkills";
 import Testimonials from "../components/Testimonials";
+import Features from "../components/Features";
 
 const HomePage = ({ successMessage }) => (
   <>
@@ -15,6 +16,7 @@ const HomePage = ({ successMessage }) => (
     <HowItWorks />
     <PopularSkills />
     <Testimonials />
+    <Features />
   </>
 );
 
