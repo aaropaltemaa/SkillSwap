@@ -1,13 +1,10 @@
 import exchangeRequestService from "../services/exchangerequests";
-import { useState } from "react";
 
 const ExchangeRequestsPage = ({
   exchangeRequests,
   setExchangeRequests,
   user,
 }) => {
-  const [error, setError] = useState(null);
-
   if (!user) {
     return <div>Please log in to view your exchange requests.</div>;
   }
@@ -27,24 +24,17 @@ const ExchangeRequestsPage = ({
   };
 
   const handleStatusChange = async (id, newStatus) => {
-    try {
-      const updated = await exchangeRequestService.updateStatus(id, newStatus);
-      setExchangeRequests(
-        exchangeRequests.map((req) =>
-          req.id === id ? { ...req, status: updated.status } : req
-        )
-      );
-      setError(null);
-    } catch (err) {
-      setError("Failed to update request status.");
-    }
+    const updated = await exchangeRequestService.updateStatus(id, newStatus);
+    setExchangeRequests(
+      exchangeRequests.map((req) =>
+        req.id === id ? { ...req, status: updated.status } : req
+      )
+    );
   };
 
   return (
     <div className="max-w-2xl mx-auto p-6">
       <h1 className="text-3xl font-bold mb-4">My Exchange Requests</h1>
-      {error && <div className="text-red-600 mb-4">{error}</div>}
-
       <section className="mb-8">
         <h2 className="text-xl font-semibold mb-2">Sent Requests</h2>
         {sentRequests.length === 0 ? (

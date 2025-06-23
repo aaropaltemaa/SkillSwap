@@ -108,7 +108,12 @@ const App = () => {
           />
           <Route
             path="/exchanges/upcoming"
-            element={<UpcomingExchanges user={user} />}
+            element={
+              <UpcomingExchanges
+                user={user}
+                exchangeRequests={exchangeRequests}
+              />
+            }
           />
         </Routes>
       </div>
