@@ -12,6 +12,10 @@ registerRouter.post("/", async (req, res) => {
     return res.status(400).json({ error: "Missing required fields" });
   }
 
+  if (password.length < 3) {
+    return res.status(400).json({ error: "password must be at least three characters" });
+  }
+
   const existingUser = await User.findOne({ username });
   if (existingUser) {
     return res.status(400).json({ error: "Username already exists" });
