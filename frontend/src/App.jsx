@@ -5,10 +5,12 @@ import CreateExchangeForm from "./components/CreateExchangeForm";
 import UpcomingExchanges from "./components/UpcomingExchanges";
 import HomePage from "./pages/HomePage";
 import ExchangeRequestsPage from "./pages/ExchangeRequestsPage";
+import MessagesPage from "./pages/MessagesPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import exchangeRequestService from "./services/exchangerequests";
 import userService from "./services/users";
+import messageService from "./services/messages";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -29,6 +31,7 @@ const App = () => {
       const user = JSON.parse(loggedUserJSON);
       setUser(user);
       exchangeRequestService.setToken(user.token);
+      messageService.setToken(user.token);
     }
   }, []);
 
@@ -114,6 +117,10 @@ const App = () => {
                 exchangeRequests={exchangeRequests}
               />
             }
+          />
+          <Route
+            path="/messages/:userId"
+            element={<MessagesPage user={user} />}
           />
         </Routes>
       </div>

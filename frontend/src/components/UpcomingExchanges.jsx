@@ -1,4 +1,12 @@
+import { useNavigate } from "react-router-dom";
+
 const UpcomingExchanges = ({ user, exchangeRequests }) => {
+  const navigate = useNavigate();
+
+  if (!user) {
+    return <div>Please log in to view your upcoming exchanges.</div>;
+  }
+
   const upcoming = exchangeRequests.filter(
     (ex) =>
       ex.status === "accepted" &&
@@ -44,8 +52,10 @@ const UpcomingExchanges = ({ user, exchangeRequests }) => {
                   Accepted
                 </span>
               </div>
-              {/* Example action button */}
-              <button className="mt-2 bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition">
+              <button
+                className="mt-2 bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
+                onClick={() => navigate(`/messages/${partner.id}`)}
+              >
                 Message {partner.username}
               </button>
             </div>
