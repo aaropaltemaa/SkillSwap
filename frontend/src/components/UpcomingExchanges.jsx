@@ -1,14 +1,20 @@
+import { Dialog, Transition } from "@headlessui/react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ReviewModal from "./ReviewModal";
 
-const MarkAsCompletedButton = () => {
-  return (
-    <button className="mt-2 mb-6 bg-green-600 text-white px-3 py-1 rounded-full hover:bg-green-700 transition">
-      Mark as completed
-    </button>
-  );
-};
+const MarkAsCompletedButton = ({ onClick }) => (
+  <button
+    className="mt-2 mb-6 bg-green-600 text-white px-3 py-1 rounded-full hover:bg-green-700 transition"
+    onClick={onClick}
+  >
+    Mark as completed
+  </button>
+);
 
 const UpcomingExchanges = ({ user, exchangeRequests }) => {
+  const [showModal, setShowModal] = useState(false);
+  const [activeExchange, setActiveExchange] = useState(null);
   const navigate = useNavigate();
 
   if (!user) {
@@ -28,8 +34,9 @@ const UpcomingExchanges = ({ user, exchangeRequests }) => {
         These are your accepted skill swaps. Message your partner and mark as
         completed when done.
       </h2>
+
       {upcoming.length === 0 ? (
-        <div className="text-gray-500 mb-2"> No upcoming exchanges yet.</div>
+        <div className="text-gray-500 mb-2">No upcoming exchanges yet.</div>
       ) : (
         upcoming.map((ex) => {
           const isSender = ex.fromUser.id === user.id;
@@ -66,11 +73,25 @@ const UpcomingExchanges = ({ user, exchangeRequests }) => {
                   Message {partner.username}
                 </button>
               </div>
-              <MarkAsCompletedButton />
+              <MarkAsCompletedButton
+                onClick={() => {
+                  setActiveExchange(ex);
+                  setShowModal(true);
+                }}
+              />
             </div>
           );
         })
       )}
+
+      <ReviewModal
+        showModal={showModal}
+        onClose={() => setShowModal(false)}
+        onSubmit={({ review, rating }) => {
+          // Handle review submission here (e.g., send to backend)
+          setShowModal(false);
+        }}
+      />
     </div>
   );
 };
