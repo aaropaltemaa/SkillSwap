@@ -1,5 +1,13 @@
 import { useNavigate } from "react-router-dom";
 
+const MarkAsCompletedButton = () => {
+  return (
+    <button className="mt-2 mb-6 bg-green-600 text-white px-3 py-1 rounded-full hover:bg-green-700 transition">
+      Mark as completed
+    </button>
+  );
+};
+
 const UpcomingExchanges = ({ user, exchangeRequests }) => {
   const navigate = useNavigate();
 
@@ -27,37 +35,38 @@ const UpcomingExchanges = ({ user, exchangeRequests }) => {
           const isSender = ex.fromUser.id === user.id;
           const partner = isSender ? ex.toUser : ex.fromUser;
           return (
-            <div
-              key={ex.id}
-              className="rounded-lg shadow p-4 mb-4 bg-white flex flex-col gap-2"
-            >
-              <div>
-                <span className="font-semibold">With:</span> {partner.username}
+            <div key={ex.id}>
+              <div className="rounded-lg shadow p-4 mb-4 bg-white flex flex-col gap-2">
+                <div>
+                  <span className="font-semibold">With:</span>{" "}
+                  {partner.username}
+                </div>
+                <div>
+                  <span className="font-semibold">You offer:</span>{" "}
+                  {isSender
+                    ? ex.skillsOffered.join(", ")
+                    : ex.skillsWanted.join(", ")}
+                </div>
+                <div>
+                  <span className="font-semibold">You receive:</span>{" "}
+                  {isSender
+                    ? ex.skillsWanted.join(", ")
+                    : ex.skillsOffered.join(", ")}
+                </div>
+                <div>
+                  <span className="font-semibold">Status:</span>{" "}
+                  <span className="inline-block px-3 py-1 rounded-full text-sm font-semibold bg-green-100 text-green-800">
+                    Accepted
+                  </span>
+                </div>
+                <button
+                  className="mt-2 bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
+                  onClick={() => navigate(`/messages/${partner.id}`)}
+                >
+                  Message {partner.username}
+                </button>
               </div>
-              <div>
-                <span className="font-semibold">You offer:</span>{" "}
-                {isSender
-                  ? ex.skillsOffered.join(", ")
-                  : ex.skillsWanted.join(", ")}
-              </div>
-              <div>
-                <span className="font-semibold">You receive:</span>{" "}
-                {isSender
-                  ? ex.skillsWanted.join(", ")
-                  : ex.skillsOffered.join(", ")}
-              </div>
-              <div>
-                <span className="font-semibold">Status:</span>{" "}
-                <span className="inline-block px-3 py-1 rounded-full text-sm font-semibold bg-green-100 text-green-800">
-                  Accepted
-                </span>
-              </div>
-              <button
-                className="mt-2 bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
-                onClick={() => navigate(`/messages/${partner.id}`)}
-              >
-                Message {partner.username}
-              </button>
+              <MarkAsCompletedButton />
             </div>
           );
         })
