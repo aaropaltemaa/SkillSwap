@@ -83,7 +83,6 @@ const UpcomingExchanges = ({ user, exchangeRequests }) => {
           );
         })
       )}
-
       <ReviewModal
         showModal={showModal}
         onClose={() => setShowModal(false)}
