@@ -11,6 +11,7 @@ import { useState, useEffect } from "react";
 import exchangeRequestService from "./services/exchangerequests";
 import userService from "./services/users";
 import messageService from "./services/messages";
+import reviewsService from "./services/reviews";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -32,6 +33,7 @@ const App = () => {
       setUser(user);
       exchangeRequestService.setToken(user.token);
       messageService.setToken(user.token);
+      reviewsService.setToken(user.token);
     }
   }, []);
 

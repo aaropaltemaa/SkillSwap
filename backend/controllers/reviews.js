@@ -90,20 +90,4 @@ reviewsRouter.get(
   }
 );
 
-// Get all reviews for a specific exchange
-reviewsRouter.get(
-  "/exchange/:exchangeId",
-  async (req, res, next) => {
-    try {
-      const { exchangeId } = req.params;
-      const reviews = await Review.find({ exchange: exchangeId })
-        .populate("reviewer", "username name")
-        .populate("reviewee", "username name");
-      res.json(reviews);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
 module.exports = reviewsRouter;

@@ -2,6 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ReviewModal from "./ReviewModal";
+import reviewsService from "../services/reviews";
 
 const MarkAsCompletedButton = ({ onClick }) => (
   <button
@@ -86,9 +87,24 @@ const UpcomingExchanges = ({ user, exchangeRequests }) => {
       <ReviewModal
         showModal={showModal}
         onClose={() => setShowModal(false)}
-        onSubmit={({ review, rating }) => {
-          // Handle review submission here (e.g., send to backend)
-          setShowModal(false);
+        onSubmit={async ({ review, rating }) => {
+          if (!activeExchange) return;
+          try {
+            await reviewsService.create({
+              reviewee:
+                activeExchange.fromUser.id === user.id
+                  ? activeExchange.toUser.id
+                  : activeExchange.fromUser.id,
+              exchange: activeExchange.id,
+              rating,
+              comment: review,
+            });
+            // Optionally show a success message or update UI
+            setShowModal(false);
+          } catch (err) {
+            // Optionally handle error
+            alert("Failed to submit review.");
+          }
         }}
       />
     </div>
