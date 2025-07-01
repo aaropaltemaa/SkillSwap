@@ -15,7 +15,7 @@ const reviewSchema = new mongoose.Schema(
     exchange: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "ExchangeRequest",
-      required: false,
+      required: true,
     },
     rating: {
       type: Number,

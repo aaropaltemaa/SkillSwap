@@ -8,6 +8,7 @@ const registerRouter = require("./controllers/register");
 const exchangeRequestsRouter = require("./controllers/exchangeRequests");
 const matchesRouter = require("./controllers/matches");
 const messagesRouter = require("./controllers/messages");
+const reviewsRouter = require("./controllers/reviews")
 const middleware = require("./utils/middleware");
 const cors = require("cors");
 
@@ -37,6 +38,7 @@ app.use("/api/register", registerRouter);
 app.use("/api/exchange-requests", exchangeRequestsRouter);
 app.use("/api/matches", matchesRouter);
 app.use("/api/messages", messagesRouter);
+app.use("/api/reviews", reviewsRouter)
 
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
