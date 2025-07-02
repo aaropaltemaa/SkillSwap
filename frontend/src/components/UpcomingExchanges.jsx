@@ -1,4 +1,3 @@
-import { Dialog, Transition } from "@headlessui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ReviewModal from "./ReviewModal";
@@ -13,7 +12,12 @@ const MarkAsCompletedButton = ({ onClick }) => (
   </button>
 );
 
-const UpcomingExchanges = ({ user, exchangeRequests }) => {
+const UpcomingExchanges = ({
+  user,
+  exchangeRequests,
+  setSuccessMessage,
+  successMessage,
+}) => {
   const [showModal, setShowModal] = useState(false);
   const [activeExchange, setActiveExchange] = useState(null);
   const navigate = useNavigate();
@@ -30,6 +34,11 @@ const UpcomingExchanges = ({ user, exchangeRequests }) => {
 
   return (
     <div className="max-w-2xl mx-auto p-6">
+      {successMessage && (
+        <div className="bg-green-100 border border-green-400 rounded-2xl text-green-700 px-4 py-3 mb-4 max-w-lg mx-auto">
+          {successMessage}
+        </div>
+      )}
       <h1 className="text-3xl font-bold mb-4">Upcoming Exchanges</h1>
       <h2 className="text-gray-500 mb-2">
         These are your accepted skill swaps. Message your partner and mark as
@@ -99,8 +108,8 @@ const UpcomingExchanges = ({ user, exchangeRequests }) => {
               rating,
               comment: review,
             });
-            // Optionally show a success message or update UI
             setShowModal(false);
+            setSuccessMessage("Review created successfully!");
           } catch (err) {
             // Optionally handle error
             alert("Failed to submit review.");

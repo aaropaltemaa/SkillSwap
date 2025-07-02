@@ -117,6 +117,8 @@ const App = () => {
               <UpcomingExchanges
                 user={user}
                 exchangeRequests={exchangeRequests}
+                setSuccessMessage={setSuccessMessage}
+                successMessage={successMessage}
               />
             }
           />
