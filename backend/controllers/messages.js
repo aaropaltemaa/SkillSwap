@@ -20,6 +20,12 @@ messagesRouter.post("/", middleware.userExtractor, async (req, res) => {
   });
 
   const savedMessage = await newMessage.save();
+
+  // Emit real-time event to both sender and receiver
+  const io = req.app.get("io");
+  io.to(sender.toString()).emit("new_message", savedMessage);
+  io.to(receiver.toString()).emit("new_message", savedMessage);
+
   res.status(201).json(savedMessage);
 });
 

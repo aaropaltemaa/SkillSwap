@@ -12,7 +12,7 @@ import exchangeRequestService from "./services/exchangerequests";
 import userService from "./services/users";
 import messageService from "./services/messages";
 import reviewsService from "./services/reviews";
-import SocketTest from "./components/SocketTest";
+import { SocketProvider } from "./components/SocketProvider";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -70,67 +70,68 @@ const App = () => {
   }, [errorMessage]);
 
   return (
-    <Router>
-      <SocketTest />
-      <NavBar user={user} setUser={setUser} />
-      <div className="py-20 text-center">
-        <Routes>
-          <Route
-            path="/"
-            element={<HomePage successMessage={successMessage} />}
-          />
-          <Route
-            path="/login"
-            element={
-              <LoginForm
-                setUser={setUser}
-                setSuccessMessage={setSuccessMessage}
-                setErrorMessage={setErrorMessage}
-                errorMessage={errorMessage}
-              />
-            }
-          />
-          <Route
-            path="create-exchange"
-            element={
-              <CreateExchangeForm
-                user={user}
-                users={users}
-                exchangeRequests={exchangeRequests}
-                setExchangeRequests={setExchangeRequests}
-                setSuccessMessage={setSuccessMessage}
-              />
-            }
-          />
-          <Route path="/register" element={<RegisterForm />} />
-          <Route
-            path="/my-requests"
-            element={
-              <ExchangeRequestsPage
-                exchangeRequests={exchangeRequests}
-                setExchangeRequests={setExchangeRequests}
-                user={user}
-              />
-            }
-          />
-          <Route
-            path="/exchanges/upcoming"
-            element={
-              <UpcomingExchanges
-                user={user}
-                exchangeRequests={exchangeRequests}
-                setSuccessMessage={setSuccessMessage}
-                successMessage={successMessage}
-              />
-            }
-          />
-          <Route
-            path="/messages/:userId"
-            element={<MessagesPage user={user} />}
-          />
-        </Routes>
-      </div>
-    </Router>
+    <SocketProvider user={user}>
+      <Router>
+        <NavBar user={user} setUser={setUser} />
+        <div className="py-20 text-center">
+          <Routes>
+            <Route
+              path="/"
+              element={<HomePage successMessage={successMessage} />}
+            />
+            <Route
+              path="/login"
+              element={
+                <LoginForm
+                  setUser={setUser}
+                  setSuccessMessage={setSuccessMessage}
+                  setErrorMessage={setErrorMessage}
+                  errorMessage={errorMessage}
+                />
+              }
+            />
+            <Route
+              path="create-exchange"
+              element={
+                <CreateExchangeForm
+                  user={user}
+                  users={users}
+                  exchangeRequests={exchangeRequests}
+                  setExchangeRequests={setExchangeRequests}
+                  setSuccessMessage={setSuccessMessage}
+                />
+              }
+            />
+            <Route path="/register" element={<RegisterForm />} />
+            <Route
+              path="/my-requests"
+              element={
+                <ExchangeRequestsPage
+                  exchangeRequests={exchangeRequests}
+                  setExchangeRequests={setExchangeRequests}
+                  user={user}
+                />
+              }
+            />
+            <Route
+              path="/exchanges/upcoming"
+              element={
+                <UpcomingExchanges
+                  user={user}
+                  exchangeRequests={exchangeRequests}
+                  setSuccessMessage={setSuccessMessage}
+                  successMessage={successMessage}
+                />
+              }
+            />
+            <Route
+              path="/messages/:userId"
+              element={<MessagesPage user={user} />}
+            />
+          </Routes>
+        </div>
+      </Router>
+    </SocketProvider>
   );
 };
 

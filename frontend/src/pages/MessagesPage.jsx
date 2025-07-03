@@ -2,6 +2,7 @@ import messageService from "../services/messages";
 import { useParams } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import userService from "../services/users";
+import { useSocket } from "../components/SocketProvider"; // <-- Correct import
 
 const MessagesPage = ({ user }) => {
   const { userId } = useParams();
@@ -11,6 +12,7 @@ const MessagesPage = ({ user }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const messagesEndRef = useRef(null);
+  const socket = useSocket(); // <-- Use the socket
 
   useEffect(() => {
     if (!user) return;
@@ -33,6 +35,27 @@ const MessagesPage = ({ user }) => {
       });
   }, [user, userId]);
 
+  // Real-time: Listen for new messages
+  useEffect(() => {
+    if (!socket || !user) return;
+
+    const handleNewMessage = (msg) => {
+      // Only add if the message is for this thread and not already present
+      if (
+        ((msg.sender === user.id && msg.receiver === userId) ||
+          (msg.sender === userId && msg.receiver === user.id)) &&
+        !messages.some((m) => m.id === msg.id)
+      ) {
+        setMessages((msgs) => [...msgs, msg]);
+      }
+    };
+
+    socket.on("new_message", handleNewMessage);
+    return () => {
+      socket.off("new_message", handleNewMessage);
+    };
+  }, [socket, user, userId, messages]);
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -41,11 +64,10 @@ const MessagesPage = ({ user }) => {
     e.preventDefault();
     if (!newMessage.trim()) return;
     try {
-      const sent = await messageService.sendMessage({
+      await messageService.sendMessage({
         receiver: userId,
         content: newMessage,
       });
-      setMessages((msgs) => [...msgs, sent]);
       setNewMessage("");
     } catch {
       setError("Failed to send message.");
