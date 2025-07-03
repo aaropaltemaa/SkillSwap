@@ -12,6 +12,7 @@ import exchangeRequestService from "./services/exchangerequests";
 import userService from "./services/users";
 import messageService from "./services/messages";
 import reviewsService from "./services/reviews";
+import SocketTest from "./components/SocketTest";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -70,6 +71,7 @@ const App = () => {
 
   return (
     <Router>
+      <SocketTest />
       <NavBar user={user} setUser={setUser} />
       <div className="py-20 text-center">
         <Routes>
