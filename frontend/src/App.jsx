@@ -13,6 +13,7 @@ import userService from "./services/users";
 import messageService from "./services/messages";
 import reviewsService from "./services/reviews";
 import { SocketProvider } from "./components/SocketProvider";
+import UserProfilePage from "./pages/UserProfilePage";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -128,6 +129,7 @@ const App = () => {
               path="/messages/:userId"
               element={<MessagesPage user={user} />}
             />
+            <Route path="/profile" element={<UserProfilePage user={user} />} />
           </Routes>
         </div>
       </Router>
