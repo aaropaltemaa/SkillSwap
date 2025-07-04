@@ -3,7 +3,13 @@
     "react-icons": "^5.5.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.53.2",
+    "@types/node": "^24.0.10",
     "eslint-config-prettier": "^10.1.5",
     "prettier": "^3.5.3"
+  },
+  "scripts": {
+    "test:e2e": "playwright test",
+    "test:report": "playwright show-report"
   }
 }
