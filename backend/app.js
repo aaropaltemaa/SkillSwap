@@ -11,6 +11,7 @@ const messagesRouter = require("./controllers/messages");
 const reviewsRouter = require("./controllers/reviews")
 const middleware = require("./utils/middleware");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 
@@ -25,7 +26,6 @@ mongoose
     logger.error("error connection to MongoDB:", error.message);
   });
 
-app.use(express.static("dist"));
 app.use(express.json());
 app.use(cors());
 
@@ -39,6 +39,17 @@ app.use("/api/exchange-requests", exchangeRequestsRouter);
 app.use("/api/matches", matchesRouter);
 app.use("/api/messages", messagesRouter);
 app.use("/api/reviews", reviewsRouter)
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.resolve(__dirname, "../frontend/dist")));
+
+  // Serve index.html for all non-API routes (for React Router)
+  app.get("*", (req, res) => {
+    if (!req.path.startsWith("/api")) {
+      res.sendFile(path.resolve(__dirname, "../frontend/dist/index.html"));
+    }
+  });
+}
 
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
