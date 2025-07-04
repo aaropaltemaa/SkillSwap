@@ -41,15 +41,12 @@ app.use("/api/messages", messagesRouter);
 app.use("/api/reviews", reviewsRouter)
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.resolve(__dirname, "../frontend/dist")));
-
-  // Serve index.html for all non-API routes (for React Router)
+  app.use(express.static(path.join(__dirname, "dist")));
   app.get(/^\/(?!api).*/, (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../frontend/dist/index.html"));
+    res.sendFile(path.join(__dirname, "dist", "index.html"));
   });
 }
 
-app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
 
 module.exports = app;
