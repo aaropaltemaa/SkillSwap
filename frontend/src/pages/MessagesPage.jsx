@@ -2,7 +2,7 @@ import messageService from "../services/messages";
 import { useParams } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import userService from "../services/users";
-import { useSocket } from "../components/SocketProvider"; // <-- Correct import
+import { useSocket } from "../components/SocketProvider";
 
 const MessagesPage = ({ user }) => {
   const { userId } = useParams();
@@ -12,7 +12,7 @@ const MessagesPage = ({ user }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const messagesEndRef = useRef(null);
-  const socket = useSocket(); // <-- Use the socket
+  const socket = useSocket();
 
   useEffect(() => {
     if (!user) return;
