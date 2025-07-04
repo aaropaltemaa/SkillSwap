@@ -33,6 +33,7 @@ const App = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
       setUser(user);
+      userService.setToken(user.token);
       exchangeRequestService.setToken(user.token);
       messageService.setToken(user.token);
       reviewsService.setToken(user.token);
@@ -129,7 +130,10 @@ const App = () => {
               path="/messages/:userId"
               element={<MessagesPage user={user} />}
             />
-            <Route path="/profile" element={<UserProfilePage user={user} />} />
+            <Route
+              path="/users/:userId"
+              element={<UserProfilePage user={user} />}
+            />
           </Routes>
         </div>
       </Router>

@@ -78,7 +78,10 @@ const NavBar = ({ setUser, user }) => {
             >
               Log out
             </button>
-            <Link to="/profile" className="hover:text-blue-600 transition bg-transparent border-none cursor-pointer">
+            <Link
+              to={`users/${user.id}`}
+              className="hover:text-blue-600 transition bg-transparent border-none cursor-pointer"
+            >
               <FaUserCircle className="w-8 h-8 text-gray-300" title="Profile" />
             </Link>
           </>
