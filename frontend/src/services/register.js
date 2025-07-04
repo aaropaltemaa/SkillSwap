@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseRegisterUrl = "http://localhost:3001/api/register";
+const baseRegisterUrl = "/api/register";
 
 const register = async (credentials) => {
   console.log("Sending register request with credentials:", credentials);

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "http://localhost:3001/api/exchange-requests";
+const baseUrl = "/api/exchange-requests";
 
 let token = null;
 
