@@ -69,5 +69,8 @@ describe("SkillSwap", () => {
         page.getByText("Exchange request created successfully!")
       ).toBeVisible();
     });
+    /*  describe("and an exchange request exists", () => {
+
+    }) */
   });
 });
