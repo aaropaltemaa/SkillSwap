@@ -71,3 +71,6 @@ jobs:
           TEST_MONGODB_URI: mongodb://localhost:27017/skillswap_test
           SECRET: test-secret-key-for-ci
           PORT: 3001
+
+      - name: Trigger deployment
+        run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
