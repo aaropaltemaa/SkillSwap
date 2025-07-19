@@ -110,6 +110,7 @@ const UpcomingExchanges = ({
             });
             setShowModal(false);
             setSuccessMessage("Review created successfully!");
+            // eslint-disable-next-line no-unused-vars
           } catch (err) {
             // Optionally handle error
             alert("Failed to submit review.");

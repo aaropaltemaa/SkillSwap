@@ -58,6 +58,7 @@ const CreateExchangeForm = ({
       setError(null);
       setSuccessMessage("Exchange request created successfully!");
       navigate("/");
+      // eslint-disable-next-line no-unused-vars
     } catch (err) {
       setError("Failed to create exchange request.");
     }

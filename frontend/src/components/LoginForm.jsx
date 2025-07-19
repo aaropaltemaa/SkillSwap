@@ -28,6 +28,7 @@ const LoginForm = ({
       setUsername("");
       setPassword("");
       navigate("/");
+      // eslint-disable-next-line no-unused-vars
     } catch (err) {
       setErrorMessage("Invalid username or password.");
     }
