@@ -97,6 +97,7 @@ const CreateExchangeForm = ({
             Skills Offered (comma separated)
           </label>
           <input
+            data-testid="skills-offered"
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             type="text"
             value={skillsOfferedInput}
@@ -110,6 +111,7 @@ const CreateExchangeForm = ({
             Skills Wanted (comma separated)
           </label>
           <input
+            data-testid="skills-wanted"
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             type="text"
             value={skillsWantedInput}
