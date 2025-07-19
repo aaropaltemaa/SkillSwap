@@ -47,6 +47,7 @@ const LoginForm = ({
         <div>
           Username
           <input
+            data-testid="username"
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             type="text"
             value={username}
@@ -57,6 +58,7 @@ const LoginForm = ({
         <div>
           Password
           <input
+            data-testid="password"
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             type="password"
             value={password}
