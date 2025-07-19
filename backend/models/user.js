@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema({
 
   skillsOffered: [
     {
-      type: String, // e.g., "Guitar", "Python"
+      type: String,
       trim: true,
       lowercase: true,
     },
