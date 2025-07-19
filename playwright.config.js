@@ -24,18 +24,22 @@ export default defineConfig({
 
   webServer: [
     {
-      command: "npm run start:test --prefix backend",
-      url: "http://localhost:3001",
-      reuseExistingServer: !process.env.CI,
-      cwd: "./",
-      timeout: 60 * 1000,
+      command: "npm run start:test",
+      port: 3001,
+      reuseExistingServer: false,
+      cwd: "./backend",
+      timeout: 30000,
+      stdout: "pipe",
+      stderr: "pipe",
     },
     {
-      command: "npm run dev --prefix frontend",
-      url: "http://localhost:5173",
-      reuseExistingServer: !process.env.CI,
-      cwd: "./",
-      timeout: 60 * 1000,
+      command: "npm run dev",
+      port: 5173,
+      reuseExistingServer: false,
+      cwd: "./frontend",
+      timeout: 30000,
+      stdout: "pipe",
+      stderr: "pipe",
     },
   ],
 });
