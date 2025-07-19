@@ -67,5 +67,7 @@ jobs:
       - name: Run e2e tests
         run: npm run test:e2e
         env:
+          NODE_ENV: test
           TEST_MONGODB_URI: mongodb://localhost:27017/skillswap_test
           SECRET: test-secret-key-for-ci
+          PORT: 3001
