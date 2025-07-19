@@ -32,3 +32,4 @@ jobs:
 
       - name: Check code style (frontend)
         run: npm run lint
+        working-directory: ./frontend
