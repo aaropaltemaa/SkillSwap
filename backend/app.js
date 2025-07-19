@@ -40,11 +40,6 @@ app.use("/api/matches", matchesRouter);
 app.use("/api/messages", messagesRouter);
 app.use("/api/reviews", reviewsRouter);
 
-if (process.env.NODE_ENV === "test") {
-  const testingRouter = require("./controllers/testing");
-  app.use("/api/testing", testingRouter);
-}
-
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "dist")));
   app.get(/^\/(?!api).*/, (req, res) => {
