@@ -1,31 +1,31 @@
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import userService from "../services/users";
+
 const UserProfilePage = ({ user }) => {
-  if (!user) {
-    return null;
-  }
+  const { userId } = useParams();
+  const [profileUser, setProfileUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Fetch the user data based on userId from URL
+    userService.getAll().then((users) => {
+      const foundUser = users.find((u) => u.id === userId);
+      setProfileUser(foundUser);
+      setLoading(false);
+    });
+  }, [userId]);
+
+  if (loading) return <div>Loading...</div>;
+  if (!profileUser) return <div>User not found</div>;
 
   return (
-    <>
-      <section className="max-w-2xl mx-auto text-center py-8">
-        <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900">
-          {user.name}
-        </h1>
-        <h2 className="mt-2 text-lg text-gray-500">@{user.username}</h2>
-        <div className="mt-4 border-t border-gray-200 w-16 mx-auto" />
-      </section>
-      <section className="max-w-2xl mx-auto py-6">
-        <h3 className="text-xl font-semibold mb-2">Skills Offered</h3>
-        <div className="flex flex-wrap justify-center gap-2">
-          {user.skillsOffered.map((skill) => (
-            <span
-              key={skill}
-              className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm"
-            >
-              {skill}
-            </span>
-          ))}
-        </div>
-      </section>
-    </>
+    // Core Profile Information
+    <section className="flex flex-col items-start bg-gray-100 p-5 h-full max-w-3xl mx-auto rounded-2xl space-y-4">
+      <h2 className="font-bold text-3xl">{profileUser.name}</h2>
+      <div>{profileUser.username}</div>
+      <div>{profileUser.email}</div>
+    </section>
   );
 };
 
