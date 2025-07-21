@@ -12,7 +12,10 @@ export const SocketProvider = ({ user, children }) => {
   useEffect(() => {
     if (!user) return;
 
-    const socketUrl = import.meta.env.VITE_SOCKET_URL;
+    // Use local development URL when in development
+    const socketUrl = import.meta.env.DEV
+      ? "http://localhost:3001"
+      : import.meta.env.VITE_SOCKET_URL;
 
     const s = io(socketUrl);
     s.emit("join", user.id);
