@@ -78,6 +78,9 @@ const NavBar = ({ setUser, user }) => {
             >
               Log out
             </button>
+            <Link to="/discover" className="hover:text-blue-600 transition">
+              Discover
+            </Link>
             <Link
               to={`users/${user.id}`}
               className="hover:text-blue-600 transition bg-transparent border-none cursor-pointer"
